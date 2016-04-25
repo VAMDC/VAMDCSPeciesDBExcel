@@ -104,7 +104,10 @@ public class SpeciesDBToExcelConverter {
 	}
 
 	private void convertIntoExcel() {
-		excelCreator = new ExcelCreator("speciesList", columnsNames,
+		DateFormat dateFormat = new SimpleDateFormat("HH-mm yyyy-MM-dd");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		excelCreator = new ExcelCreator("speciesList on "+currentDate, columnsNames,
 				columnsTypes, columnsDataContent, false);
 	}
 	
@@ -113,10 +116,8 @@ public class SpeciesDBToExcelConverter {
 		this.buildInternalObjectModel();
 		this.getInformationFromService();
 		this.convertIntoExcel();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-		Date date = new Date();
-		String currentDate = dateFormat.format(date);
-		new ExcelFileWriter(excelCreator, "VAMDC_SpeciesDBContent_on"+currentDate+".xls").writeFile();;
+		
+		new ExcelFileWriter(excelCreator, "VAMDC_SpeciesDBContent.xls").writeFile();;
 	}
 
 	public static void main(String[] args) throws IOException {
